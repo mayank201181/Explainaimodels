@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, AnalogyBox, InfoBox } from '../ui.jsx'
+import { Aud } from '../audience.jsx'
 
 export default function Intro() {
   return (
@@ -14,12 +15,13 @@ export default function Intro() {
         </p>
         <p className="mt-4 text-lg leading-relaxed text-slate-200">
           The whole thing is maybe <span className="font-semibold text-white">one terabyte</span> —
-          a file smaller than your photo library. So the natural question is the one you
-          asked:
+          a file smaller than your photo library. So the natural question is:
         </p>
         <p className="mt-4 rounded-xl border border-slate-700 bg-slate-800/50 p-4 text-xl font-medium italic text-sky-200">
-          “How can one terabyte of storage possibly contain the knowledge of the universe —
-          and answer me without ever going online?”
+          <Aud
+            pro='“How can one terabyte of storage possibly contain the knowledge of the universe — and answer me without ever going online?”'
+            teen='“How can one little file know so much stuff — and still work when there’s no internet at all?”'
+          />
         </p>
       </Card>
 
@@ -30,12 +32,25 @@ export default function Intro() {
           amount of text — and it uses those patterns to <span className="font-semibold">predict</span>,
           word by word, what a good answer looks like. That’s a much smaller thing to store.
         </InfoBox>
-        <AnalogyBox title="Why that should feel familiar">
-          You don’t remember every tick of every stock you’ve ever traded. But after 20 years
-          you’ve <em>internalised the patterns</em> — you can react to a market you’ve never
-          seen before. The model is that, taken to an extreme: it read the internet, kept the
-          patterns, threw away the raw text.
-        </AnalogyBox>
+        <Aud
+          pro={
+            <AnalogyBox title="Why that should feel familiar">
+              You don’t remember every tick of every stock you’ve ever traded. But after 20 years
+              you’ve <em>internalised the patterns</em> — you can react to a market you’ve never
+              seen before. The model is that, taken to an extreme: it read the internet, kept the
+              patterns, threw away the raw text.
+            </AnalogyBox>
+          }
+          teen={
+            <AnalogyBox title="Think of it like…" icon="🎮">
+              You haven’t memorised every YouTube video or every song ever made. But you’ve watched
+              and heard enough that you just <em>get</em> what a good song or a funny video feels
+              like — even a brand-new one. The AI is that idea turned up to a thousand: it “watched”
+              a huge chunk of the internet, kept the <em>vibe and the patterns</em>, and threw away
+              the actual videos.
+            </AnalogyBox>
+          }
+        />
       </div>
 
       <Card className="p-6">
@@ -51,6 +66,11 @@ export default function Intro() {
           </span>{' '}
           and we’ll go one level deeper. By the end, the laptop won’t feel like magic. It’ll
           feel almost obvious.
+        </p>
+        <p className="mt-3 rounded-lg border border-emerald-500/30 bg-emerald-500/[0.06] p-3 text-sm text-emerald-100/90">
+          👋 See the <span className="font-semibold">💹 Pro / 🎮 Teen</span> switch at the top? Flip
+          it any time to change all the examples between “finance/trading” and “everyday teenager”
+          language. Same steps, different way of explaining. Try whichever fits you.
         </p>
       </Card>
     </div>

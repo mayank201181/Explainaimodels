@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { Card, AnalogyBox, InfoBox, Button } from '../ui.jsx'
+import { Aud } from '../audience.jsx'
 
 // Fixed, slightly noisy data points that roughly follow y = 0.7x + 1.2.
 // The "model" is a line y = m*x + b with two dials (m, b) it must learn.
@@ -143,12 +144,24 @@ export default function Training() {
       </Card>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <AnalogyBox>
-          This is calibrating a model against the market. You start with rough parameters, measure
-          the fit against real prints, adjust, and repeat until the residuals are small. Training
-          an AI is the same optimisation loop — just with billions of parameters and the “data”
-          being all of human writing.
-        </AnalogyBox>
+        <Aud
+          pro={
+            <AnalogyBox>
+              This is calibrating a model against the market. You start with rough parameters, measure
+              the fit against real prints, adjust, and repeat until the residuals are small. Training
+              an AI is the same optimisation loop — just with billions of parameters and the “data”
+              being all of human writing.
+            </AnalogyBox>
+          }
+          teen={
+            <AnalogyBox title="Think of it like…" icon="🎮">
+              This is exactly how you get good at anything — shooting a basketball, a video game, an
+              instrument. You try, you miss, you see <em>how</em> you missed, you adjust a little,
+              and you try again. Do that thousands of times and your aim gets scary good. Training an
+              AI is that same “practice and adjust” loop, just done billions of times, super fast.
+            </AnalogyBox>
+          }
+        />
         <InfoBox title="Why training needs the internet but using it doesn’t" tone="purple">
           Training is the expensive part: months of computation on enormous data centres to set
           the dials. But once they’re set, they’re <span className="font-semibold">frozen into

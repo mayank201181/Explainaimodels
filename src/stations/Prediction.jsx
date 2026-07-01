@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import { Card, AnalogyBox, InfoBox, Slider, ProbBar, Chip } from '../ui.jsx'
-import { PREDICTION_EXAMPLES, applyTemperature } from '../data.js'
+import { PREDICTION_EXAMPLES_PRO, PREDICTION_EXAMPLES_TEEN, applyTemperature } from '../data.js'
+import { useAudience, Aud } from '../audience.jsx'
 
 export default function Prediction() {
+  const [mode] = useAudience()
+  const EXAMPLES = mode === 'teen' ? PREDICTION_EXAMPLES_TEEN : PREDICTION_EXAMPLES_PRO
   const [idx, setIdx] = useState(0)
   const [temp, setTemp] = useState(0.8)
-  const example = PREDICTION_EXAMPLES[idx]
+  const i = Math.min(idx, EXAMPLES.length - 1)
+  const example = EXAMPLES[i]
   const dist = applyTemperature(example.dist, temp).sort((a, b) => b.p - a.p)
   const max = dist[0].p
 
@@ -23,8 +27,8 @@ export default function Prediction() {
           TRY IT — pick a sentence and watch the model guess what comes next
         </div>
         <div className="mb-5 flex flex-wrap gap-2">
-          {PREDICTION_EXAMPLES.map((e, i) => (
-            <Chip key={i} active={i === idx} onClick={() => setIdx(i)}>
+          {EXAMPLES.map((e, k) => (
+            <Chip key={k} active={k === i} onClick={() => setIdx(k)}>
               {e.prompt.slice(0, 26)}…
             </Chip>
           ))}
@@ -62,15 +66,27 @@ export default function Prediction() {
       </Card>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <AnalogyBox>
-          It’s a probability distribution over “what happens next” — exactly how you think about
-          the next move in a market. You’re never certain; you have a{' '}
-          <em>weighted set of likely outcomes</em>. Temperature is your risk appetite: crank it
-          up and you take the long-shot trade; keep it low and you stick with the base case.
-        </AnalogyBox>
+        <Aud
+          pro={
+            <AnalogyBox>
+              It’s a probability distribution over “what happens next” — exactly how you think about
+              the next move in a market. You’re never certain; you have a{' '}
+              <em>weighted set of likely outcomes</em>. Temperature is your risk appetite: crank it
+              up and you take the long-shot trade; keep it low and you stick with the base case.
+            </AnalogyBox>
+          }
+          teen={
+            <AnalogyBox title="Think of it like…" icon="🎮">
+              It’s exactly your phone keyboard. When you text “I’m on my…”, it suggests{' '}
+              <em>way</em>, <em>phone</em>, <em>break</em> — with the best guess biggest and in the
+              middle. The AI is that autocomplete, but enormously smarter. Temperature is how “wild”
+              the suggestions get: low = boring and safe, high = it picks the weird surprising word.
+            </AnalogyBox>
+          }
+        />
         <InfoBox title="So where does the “knowledge” live?" tone="purple">
-          Notice you didn’t look anything up. The model knew that after “boil the…” comes
-          “water,” not because it stored a fact, but because that pattern is baked into it.
+          Notice you didn’t look anything up. The model just knew what usually comes next — not
+          because it stored a fact, but because that pattern is baked into it.
           <span className="font-semibold text-purple-200"> Next we’ll see how words even
           become something a machine can do maths on.</span>
         </InfoBox>

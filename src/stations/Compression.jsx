@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Card, AnalogyBox, InfoBox, Toggle } from '../ui.jsx'
+import { Aud } from '../audience.jsx'
 
 export default function Compression() {
   const [mode, setMode] = useState('generalize') // 'memorize' | 'generalize'
@@ -98,12 +99,25 @@ export default function Compression() {
       </Card>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <AnalogyBox>
-          A junior analyst who’s memorised last year’s trades is useless the moment the market
-          does something new. A seasoned PM has compressed decades into a handful of durable
-          principles and reads a fresh situation instantly. The model is the seasoned PM: it
-          threw away the transcripts and kept the judgement.
-        </AnalogyBox>
+        <Aud
+          pro={
+            <AnalogyBox>
+              A junior analyst who’s memorised last year’s trades is useless the moment the market
+              does something new. A seasoned PM has compressed decades into a handful of durable
+              principles and reads a fresh situation instantly. The model is the seasoned PM: it
+              threw away the transcripts and kept the judgement.
+            </AnalogyBox>
+          }
+          teen={
+            <AnalogyBox title="Think of it like…" icon="🎮">
+              Cramming for a test by memorising every answer falls apart the second the question is
+              worded differently. But if you actually <em>understand</em> how it works, you can
+              solve problems you’ve never seen. Same with a video game: memorising one level is
+              useless on level 2, but once you get the <em>rules</em>, you can play any level. The AI
+              learned the rules and threw away the answer sheet.
+            </AnalogyBox>
+          }
+        />
         <InfoBox title="The honest caveat" tone="purple">
           Because it keeps rules and not pages, the model is <em>lossy</em> — it can blur or
           reconstruct details imperfectly. That’s the same reason it sometimes states something

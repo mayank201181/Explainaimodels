@@ -3,7 +3,7 @@
 // computes these live over ~100,000 possible tokens. We keep it honest by
 // labelling it as a simplified illustration in the UI.
 
-export const PREDICTION_EXAMPLES = [
+export const PREDICTION_EXAMPLES_PRO = [
   {
     prompt: 'The stock market crashed, and nervous investors began to',
     dist: [
@@ -49,6 +49,54 @@ export const PREDICTION_EXAMPLES = [
       { word: 'expectations', p: 0.06 },
       { word: 'clients', p: 0.03 },
       { word: 'dinosaurs', p: 0.02 },
+    ],
+  },
+]
+
+export const PREDICTION_EXAMPLES_TEEN = [
+  {
+    prompt: 'I stayed up way too late last night, so today I feel really',
+    dist: [
+      { word: 'tired', p: 0.48 },
+      { word: 'sleepy', p: 0.2 },
+      { word: 'exhausted', p: 0.13 },
+      { word: 'grumpy', p: 0.09 },
+      { word: 'awful', p: 0.05 },
+      { word: 'fine', p: 0.03 },
+      { word: 'amazing', p: 0.02 },
+    ],
+  },
+  {
+    prompt: 'She scored the winning goal, and the whole crowd started to',
+    dist: [
+      { word: 'cheer', p: 0.52 },
+      { word: 'scream', p: 0.19 },
+      { word: 'celebrate', p: 0.14 },
+      { word: 'clap', p: 0.08 },
+      { word: 'cry', p: 0.04 },
+      { word: 'leave', p: 0.03 },
+    ],
+  },
+  {
+    prompt: 'My phone battery is at 1%, I really need to find a',
+    dist: [
+      { word: 'charger', p: 0.74 },
+      { word: 'plug', p: 0.11 },
+      { word: 'socket', p: 0.07 },
+      { word: 'friend', p: 0.04 },
+      { word: 'cable', p: 0.03 },
+      { word: 'unicorn', p: 0.01 },
+    ],
+  },
+  {
+    prompt: 'To bake cookies, you mix the flour, sugar and',
+    dist: [
+      { word: 'butter', p: 0.44 },
+      { word: 'eggs', p: 0.3 },
+      { word: 'chocolate', p: 0.16 },
+      { word: 'milk', p: 0.06 },
+      { word: 'salt', p: 0.03 },
+      { word: 'glitter', p: 0.01 },
     ],
   },
 ]

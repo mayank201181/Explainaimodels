@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Card, AnalogyBox, InfoBox } from '../ui.jsx'
 import { approximateTokens, tokenId } from '../data.js'
+import { useAudience, Aud } from '../audience.jsx'
 
 const COLORS = [
   'bg-sky-500/25 text-sky-200 border-sky-500/40',
@@ -11,7 +12,12 @@ const COLORS = [
 ]
 
 export default function Tokens() {
-  const [text, setText] = useState('Managing a portfolio means managing risk.')
+  const [mode] = useAudience()
+  const [text, setText] = useState(
+    mode === 'teen'
+      ? 'My favourite game is so much fun to play!'
+      : 'Managing a portfolio means managing risk.'
+  )
   const tokens = approximateTokens(text)
 
   return (
@@ -66,16 +72,29 @@ export default function Tokens() {
       </Card>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <AnalogyBox>
-          Think of it like every instrument getting a ticker symbol. Once “Apple” becomes AAPL
-          and lives as a row of numbers, your risk engine can add, weight and correlate it. The
-          model does the same to language: turn messy words into clean numbers, then do maths.
-        </AnalogyBox>
+        <Aud
+          pro={
+            <AnalogyBox>
+              Think of it like every instrument getting a ticker symbol. Once “Apple” becomes AAPL
+              and lives as a row of numbers, your risk engine can add, weight and correlate it. The
+              model does the same to language: turn messy words into clean numbers, then do maths.
+            </AnalogyBox>
+          }
+          teen={
+            <AnalogyBox title="Think of it like…" icon="🎮">
+              It’s like every player in a game getting a jersey number, or every contact in your
+              phone getting saved with an ID. The computer can’t “think” about the word{' '}
+              <em>banana</em> — but it can absolutely do maths with the number{' '}
+              <em>#4127</em>. Tokens turn messy words into tidy numbers it can crunch.
+            </AnalogyBox>
+          }
+        />
         <InfoBox title="One step further: meaning as coordinates" tone="purple">
           Each token’s number is expanded into a long list of numbers — a{' '}
           <span className="font-semibold">coordinate in “meaning space.”</span> Words with
-          similar meaning end up near each other, like “king/queen” or “bull/bear.” That’s how
-          the machine gets a sense of <em>meaning</em> from pure numbers.
+          similar meaning end up near each other, like{' '}
+          <Aud pro={<>“king/queen” or “bull/bear.”</>} teen={<>“happy/glad” or “phone/mobile.”</>} />{' '}
+          That’s how the machine gets a sense of <em>meaning</em> from pure numbers.
         </InfoBox>
       </div>
     </div>

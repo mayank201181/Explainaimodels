@@ -24,11 +24,11 @@ export function Eyebrow({ children }) {
   )
 }
 
-export function AnalogyBox({ title = 'Trader’s analogy', children }) {
+export function AnalogyBox({ title = 'Trader’s analogy', icon = '💹', children }) {
   return (
     <div className="rounded-xl border border-amber-500/30 bg-amber-500/[0.06] p-4">
       <div className="mb-1 flex items-center gap-2 text-sm font-semibold text-amber-300">
-        <span>💹</span> {title}
+        <span>{icon}</span> {title}
       </div>
       <div className="text-[15px] leading-relaxed text-amber-100/90">{children}</div>
     </div>

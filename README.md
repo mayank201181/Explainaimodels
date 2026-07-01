@@ -6,9 +6,19 @@ An interactive, no-jargon web app that answers a simple question:
 > does "the knowledge of the universe" get compressed into a ~1 TB file?
 
 It's a step-by-step guided journey of 10 hands-on stations. Each one explains a
-single idea in plain language (with an analogy for anyone from a finance /
-trading background), gives you something to **play with**, then unlocks the next
-step — the "yes, *this* part I understand → now go deeper" flow.
+single idea in plain language, gives you something to **play with**, then unlocks
+the next step — the "yes, *this* part I understand → now go deeper" flow.
+
+### Two audiences, one app
+
+A **💹 Pro / 🎮 Teen** switch at the top re-skins every explanation and analogy:
+
+- **Pro** — finance / trading framing (markets, portfolios, risk, calibration)
+- **Teen (12–16)** — everyday framing (phones, autocomplete, gaming, YouTube,
+  school, sport)
+
+The interactive widgets are identical in both modes; only the words change. The
+choice is remembered across visits.
 
 ## The stations
 

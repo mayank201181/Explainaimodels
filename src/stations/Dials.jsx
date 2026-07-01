@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Card, AnalogyBox, InfoBox, Slider } from '../ui.jsx'
 import { humanNumber } from '../data.js'
+import { Aud } from '../audience.jsx'
 
 // A single artificial "neuron": output = sigmoid(w1*x1 + w2*x2 + bias)
 function sigmoid(x) {
@@ -87,12 +88,25 @@ export default function Dials() {
         <div className="mt-2 text-center text-xs text-slate-500">…times 40 billion more.</div>
       </Card>
 
-      <AnalogyBox>
-        It’s your pricing model with billions of coefficients instead of a handful. You know
-        how one badly-set coefficient throws off a whole valuation — now imagine tuning 750
-        billion of them so the <em>entire</em> machine outputs sensible language. The finished
-        settings <em>are</em> the intelligence.
-      </AnalogyBox>
+      <Aud
+        pro={
+          <AnalogyBox>
+            It’s your pricing model with billions of coefficients instead of a handful. You know
+            how one badly-set coefficient throws off a whole valuation — now imagine tuning 750
+            billion of them so the <em>entire</em> machine outputs sensible language. The finished
+            settings <em>are</em> the intelligence.
+          </AnalogyBox>
+        }
+        teen={
+          <AnalogyBox title="Think of it like…" icon="🎮">
+            You know the “create your character” screen in a game — dozens of sliders for face,
+            hair, height, voice? Each slider is a dial, and the exact combination makes <em>your</em>
+            character. A big AI is that same idea with 750 billion sliders, all tuned together so
+            that instead of a face, it produces sensible language. The settings <em>are</em> the
+            intelligence.
+          </AnalogyBox>
+        }
+      />
     </div>
   )
 }

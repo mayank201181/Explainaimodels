@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Card, AnalogyBox, InfoBox, Slider, Chip } from '../ui.jsx'
 import { humanBytes, humanNumber } from '../data.js'
+import { Aud } from '../audience.jsx'
 
 const PRECISIONS = [
   { bits: 16, label: '16-bit', note: 'full precision (how models are born)' },
@@ -111,12 +112,25 @@ export default function Storage() {
         </InfoBox>
       </div>
 
-      <AnalogyBox>
-        You already do this every day. A tick doesn’t need 15 decimal places — you round to the
-        cent and your P&amp;L is still right. Quantization is the model rounding its 750 billion
-        “prices” to fewer digits so the whole book fits in memory. Precision you can’t perceive,
-        thrown away on purpose.
-      </AnalogyBox>
+      <Aud
+        pro={
+          <AnalogyBox>
+            You already do this every day. A tick doesn’t need 15 decimal places — you round to the
+            cent and your P&amp;L is still right. Quantization is the model rounding its 750 billion
+            “prices” to fewer digits so the whole book fits in memory. Precision you can’t perceive,
+            thrown away on purpose.
+          </AnalogyBox>
+        }
+        teen={
+          <AnalogyBox title="Think of it like…" icon="🎮">
+            It’s the same as picking video quality on YouTube. 4K looks amazing but the file is
+            huge; 480p is a bit softer but downloads in seconds and honestly looks fine on a phone.
+            “4-bit” is the model choosing the smaller-file version of itself — a tiny bit less crisp,
+            but small enough to actually fit on the laptop. Same trick as an MP3 or a compressed
+            game download.
+          </AnalogyBox>
+        }
+      />
     </div>
   )
 }

@@ -1,25 +1,41 @@
 import React, { useState } from 'react'
 import { Card, AnalogyBox, InfoBox, Slider, Button, ProbBar } from '../ui.jsx'
 import { applyTemperature } from '../data.js'
+import { useAudience, Aud } from '../audience.jsx'
 
 // A scripted generator. At each step the "model" has a few candidate next words.
 // Candidates are near-synonyms so any path stays coherent — the point is to show
 // the ONE-WORD-AT-A-TIME loop and how temperature changes the choices.
-const START = 'The market opened'
-const STEPS = [
-  [ { word: 'higher', p: 0.5 }, { word: 'lower', p: 0.3 }, { word: 'flat', p: 0.2 } ],
-  [ { word: 'today', p: 0.6 }, { word: 'sharply', p: 0.25 }, { word: 'again', p: 0.15 } ],
-  [ { word: 'as', p: 0.7 }, { word: 'while', p: 0.2 }, { word: 'and', p: 0.1 } ],
-  [ { word: 'traders', p: 0.6 }, { word: 'investors', p: 0.3 }, { word: 'funds', p: 0.1 } ],
-  [ { word: 'rushed', p: 0.45 }, { word: 'moved', p: 0.35 }, { word: 'scrambled', p: 0.2 } ],
-  [ { word: 'to', p: 0.85 }, { word: 'quickly', p: 0.15 } ],
-  [ { word: 'hedge', p: 0.4 }, { word: 'rebalance', p: 0.35 }, { word: 'adjust', p: 0.25 } ],
-  [ { word: 'their', p: 0.8 }, { word: 'the', p: 0.2 } ],
-  [ { word: 'positions', p: 0.5 }, { word: 'portfolios', p: 0.3 }, { word: 'books', p: 0.2 } ],
-  [ { word: 'before', p: 0.6 }, { word: 'ahead', p: 0.25 }, { word: 'near', p: 0.15 } ],
-  [ { word: 'the', p: 0.9 }, { word: 'market', p: 0.1 } ],
-  [ { word: 'close.', p: 0.6 }, { word: 'bell.', p: 0.25 }, { word: 'afternoon.', p: 0.15 } ],
-]
+const SCRIPTS = {
+  pro: {
+    start: 'The market opened',
+    steps: [
+      [ { word: 'higher', p: 0.5 }, { word: 'lower', p: 0.3 }, { word: 'flat', p: 0.2 } ],
+      [ { word: 'today', p: 0.6 }, { word: 'sharply', p: 0.25 }, { word: 'again', p: 0.15 } ],
+      [ { word: 'as', p: 0.7 }, { word: 'while', p: 0.2 }, { word: 'and', p: 0.1 } ],
+      [ { word: 'traders', p: 0.6 }, { word: 'investors', p: 0.3 }, { word: 'funds', p: 0.1 } ],
+      [ { word: 'rushed', p: 0.45 }, { word: 'moved', p: 0.35 }, { word: 'scrambled', p: 0.2 } ],
+      [ { word: 'to', p: 0.85 }, { word: 'quickly', p: 0.15 } ],
+      [ { word: 'hedge', p: 0.4 }, { word: 'rebalance', p: 0.35 }, { word: 'adjust', p: 0.25 } ],
+      [ { word: 'their', p: 0.8 }, { word: 'the', p: 0.2 } ],
+      [ { word: 'positions', p: 0.5 }, { word: 'portfolios', p: 0.3 }, { word: 'books', p: 0.2 } ],
+      [ { word: 'before', p: 0.6 }, { word: 'ahead', p: 0.25 }, { word: 'near', p: 0.15 } ],
+      [ { word: 'the', p: 0.9 }, { word: 'market', p: 0.1 } ],
+      [ { word: 'close.', p: 0.6 }, { word: 'bell.', p: 0.25 }, { word: 'afternoon.', p: 0.15 } ],
+    ],
+  },
+  teen: {
+    start: 'After school, my friends and I decided to',
+    steps: [
+      [ { word: 'go', p: 0.5 }, { word: 'walk', p: 0.2 }, { word: 'head', p: 0.2 }, { word: 'rush', p: 0.1 } ],
+      [ { word: 'to', p: 0.7 }, { word: 'toward', p: 0.3 } ],
+      [ { word: 'the', p: 0.65 }, { word: 'a', p: 0.35 } ],
+      [ { word: 'park', p: 0.4 }, { word: 'mall', p: 0.3 }, { word: 'court', p: 0.2 }, { word: 'field', p: 0.1 } ],
+      [ { word: 'and', p: 0.6 }, { word: 'to', p: 0.4 } ],
+      [ { word: 'hang out.', p: 0.4 }, { word: 'play games.', p: 0.3 }, { word: 'chill together.', p: 0.2 }, { word: 'relax a bit.', p: 0.1 } ],
+    ],
+  },
+}
 
 function sample(dist) {
   const r = Math.random()
@@ -32,12 +48,24 @@ function sample(dist) {
 }
 
 export default function Inference() {
+  const [mode] = useAudience()
+  const script = SCRIPTS[mode] || SCRIPTS.pro
+  const { start: START, steps: STEPS } = script
+
   const [temp, setTemp] = useState(0.8)
   const [chosen, setChosen] = useState([]) // words picked so far
   const i = chosen.length
   const done = i >= STEPS.length
   const dist = done ? [] : applyTemperature(STEPS[i], temp).sort((a, b) => b.p - a.p)
   const max = dist.length ? dist[0].p : 1
+
+  // reset the run if the audience (and therefore the script) changes
+  const scriptKey = START
+  const [activeKey, setActiveKey] = useState(scriptKey)
+  if (activeKey !== scriptKey) {
+    setActiveKey(scriptKey)
+    setChosen([])
+  }
 
   function next() {
     if (done) return
@@ -51,8 +79,6 @@ export default function Inference() {
     setChosen(out)
   }
   function reset() { setChosen([]) }
-
-  const text = [START, ...chosen].join(' ')
 
   return (
     <div className="space-y-6">
@@ -107,17 +133,28 @@ export default function Inference() {
       </Card>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <AnalogyBox>
-          It’s a trader making one decision, seeing the new state of the book, then making the
-          next — never the whole plan at once, always “given everything so far, what’s the best
-          next move?” The model commits to one word, re-reads the whole context including its own
-          words, and decides again.
-        </AnalogyBox>
+        <Aud
+          pro={
+            <AnalogyBox>
+              It’s a trader making one decision, seeing the new state of the book, then making the
+              next — never the whole plan at once, always “given everything so far, what’s the best
+              next move?” The model commits to one word, re-reads the whole context including its own
+              words, and decides again.
+            </AnalogyBox>
+          }
+          teen={
+            <AnalogyBox title="Think of it like…" icon="🎮">
+              It’s exactly like texting with autocomplete. You tap one word, your phone shows the
+              sentence so far and suggests the next word, you tap again — you never write the whole
+              message in one go. The AI does that at lightning speed: pick a word, re-read
+              everything (including its own words), pick the next.
+            </AnalogyBox>
+          }
+        />
         <InfoBox title="This is why the same question gives different answers" tone="purple">
           Because it <em>samples</em> from probabilities rather than always taking the top word,
-          you get variety — like re-running a simulation with a different random seed. Turn
-          temperature to near-zero and it becomes almost deterministic: same question, same
-          answer, every time.
+          you get variety — like re-rolling for a different result. Turn temperature to near-zero
+          and it becomes almost predictable: same question, same answer, every time.
         </InfoBox>
       </div>
     </div>

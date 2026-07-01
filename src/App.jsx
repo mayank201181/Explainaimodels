@@ -11,6 +11,7 @@ import Offline from './stations/Offline.jsx'
 import Hallucination from './stations/Hallucination.jsx'
 import Recap from './stations/Recap.jsx'
 import { Eyebrow, Button } from './ui.jsx'
+import { AudienceProvider, useAudience, Aud } from './audience.jsx'
 
 const STATIONS = [
   { id: 'intro', tab: 'Start', title: 'A whole AI, on a laptop, with no internet', sub: 'The puzzle we’re going to solve', C: Intro },
@@ -29,6 +30,36 @@ const STATIONS = [
 const KEY = 'ai-guide-progress-v1'
 
 export default function App() {
+  return (
+    <AudienceProvider>
+      <Guide />
+    </AudienceProvider>
+  )
+}
+
+function AudienceSwitcher() {
+  const [mode, setMode] = useAudience()
+  return (
+    <div className="inline-flex rounded-full border border-slate-700 bg-slate-800/60 p-0.5 text-xs font-semibold">
+      <button
+        onClick={() => setMode('pro')}
+        className={'rounded-full px-3 py-1.5 transition ' +
+          (mode === 'pro' ? 'bg-sky-500 text-white' : 'text-slate-400 hover:text-slate-200')}
+      >
+        💹 Pro
+      </button>
+      <button
+        onClick={() => setMode('teen')}
+        className={'rounded-full px-3 py-1.5 transition ' +
+          (mode === 'teen' ? 'bg-emerald-500 text-white' : 'text-slate-400 hover:text-slate-200')}
+      >
+        🎮 Teen
+      </button>
+    </div>
+  )
+}
+
+function Guide() {
   const [current, setCurrent] = useState(0)
   const [maxUnlocked, setMaxUnlocked] = useState(0)
   const topRef = useRef(null)
@@ -78,12 +109,18 @@ export default function App() {
                 🧠 How does an AI fit on a laptop?
               </div>
               <div className="truncate text-xs text-slate-500">
-                An interactive, no-jargon guide to local AI models
+                <Aud
+                  pro="An interactive, no-jargon guide to local AI models"
+                  teen="How AI really works — made for ages 12–16"
+                />
               </div>
             </div>
-            <Button variant="subtle" onClick={restart} className="shrink-0 !px-3 !py-1.5 text-xs">
-              ↻ Restart
-            </Button>
+            <div className="flex shrink-0 items-center gap-2">
+              <AudienceSwitcher />
+              <Button variant="subtle" onClick={restart} className="!px-3 !py-1.5 text-xs">
+                ↻ Restart
+              </Button>
+            </div>
           </div>
 
           {/* progress bar */}

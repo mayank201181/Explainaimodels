@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Card, AnalogyBox, InfoBox, Toggle } from '../ui.jsx'
+import { Aud } from '../audience.jsx'
 
 export default function Offline() {
   const [online, setOnline] = useState(true)
@@ -83,12 +84,24 @@ export default function Offline() {
         </p>
       </Card>
 
-      <AnalogyBox>
-        It’s a printed research report. Incredibly valuable, self-contained, works on a plane with
-        no signal — but dated the day it went to print. For last night’s close you need a live
-        feed. A local AI is that report: deep, portable, and frozen in time. A cloud AI is the
-        live terminal — current, but only while you’re connected.
-      </AnalogyBox>
+      <Aud
+        pro={
+          <AnalogyBox>
+            It’s a printed research report. Incredibly valuable, self-contained, works on a plane with
+            no signal — but dated the day it went to print. For last night’s close you need a live
+            feed. A local AI is that report: deep, portable, and frozen in time. A cloud AI is the
+            live terminal — current, but only while you’re connected.
+          </AnalogyBox>
+        }
+        teen={
+          <AnalogyBox title="Think of it like…" icon="🎮">
+            It’s like a downloaded offline map, or a game you installed so it plays with no Wi-Fi.
+            Everything you need is already on the device, so it works anywhere — on a plane, in a
+            tunnel, out camping. But it can’t know anything that happened <em>after</em> you
+            downloaded it. For today’s news or live scores, you still have to go online.
+          </AnalogyBox>
+        }
+      />
     </div>
   )
 }
