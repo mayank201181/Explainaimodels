@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  background: #0a0e17;
+  color: #e6e9f0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle animated background grid */
+.bg-grid {
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(56, 189, 248, 0.08), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(168, 85, 247, 0.08), transparent 40%);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.45s ease both; }
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+.pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
+
+@keyframes flow {
+  from { background-position: 0 0; }
+  to { background-position: 40px 0; }
+}
+
+/* Custom range slider styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: #1e293b;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #38bdf8;
+  cursor: pointer;
+  border: 3px solid #0a0e17;
+  box-shadow: 0 0 0 1px #38bdf8;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #38bdf8;
+  cursor: pointer;
+  border: 3px solid #0a0e17;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #0a0e17; }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #334155; }
